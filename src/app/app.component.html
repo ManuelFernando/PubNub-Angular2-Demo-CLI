@@ -1,0 +1,30 @@
+<div class="container">
+  <h3>
+    Channel: {{ channelName }}
+    <br/>
+    <small ngif="status.category">{{ status.category }}</small>
+    <br/>
+  </h3>
+  <div class="well">
+    <p>Users Online ({{ presence.occupancy }}) <strong>You: {{userId}}</strong></p>
+    <ul>
+      <li *ngFor="let o of occupants">
+        {{ o.uuid }}
+      </li>
+    </ul>
+  </div>
+  <hr/>
+  <p>Enter a new message</p>
+  <input type="text" class="form-control" [(ngModel)]="newMessage" />
+  <br/>
+  <button class="btn btn-primary" (click)="publish()">Push Now!</button>
+  <br/>
+  <br/>
+  <table class="table table">
+    <tbody>
+    <tr *ngFor="let item of messages.slice().reverse()">
+      <td>{{ item.message }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
