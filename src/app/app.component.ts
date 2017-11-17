@@ -6,53 +6,36 @@ import { PubNubAngular } from 'pubnub-angular2';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  pubnubService: PubNubAngular;
   userId: string;
   newMessage: string;
   channelName: string;
   status = {};
-  presence = {};
   occupants = [];
-  messages = [];
-  constructor(pubnubService: PubNubAngular) {
-    this.pubnubService = pubnubService;
-    this.userId = 'User ' + Math.round(Math.random() * 1000);
-    this.newMessage = '';
-    this.channelName = 'PubNub-Angular2-TestDemoTS';
+  messages: any[];
+  pubnub: PubNubAngular;
+  constructor(pubnub: PubNubAngular) {
+    this.channelName = 'channel1';
 
-    this.pubnubService.init({
+    pubnub.init({
       publishKey: 'demo',
       subscribeKey: 'demo',
       uuid: this.userId
     });
 
-    this.pubnubService.subscribe({channels: [this.channelName], triggerEvents: true, withPresence: true, autoload: 50});
+    pubnub.subscribe({ channels: [this.channelName], triggerEvents: true });
 
-    this.messages = pubnubService.getMessage(this.channelName);
-
-    let self = this;
-
-    pubnubService.getPresence(this.channelName, (presence) => {
-      self.presence = presence;
-
-      self.pubnubService.hereNow({
-        channels: [self.channelName],
-        includeUUIDs: true,
-        includeState: true
-      }).then(function (response) {
-        self.occupants = response.channels[self.channelName].occupants;
-      }).catch((error) => {});
+    pubnub.getStatus(this.channelName, (status) => {
+      this.status = status;
     });
 
-    pubnubService.getStatus(this.channelName, (status) => {
-      self.status = status;
-    });
+    this.messages = pubnub.getMessage(this.channelName);
+
+    this.pubnub = pubnub;
   }
 
   publish(){
-    if (this.newMessage !== '') {
-      this.pubnubService.publish({message: '[' + this.userId + '] ' + this.newMessage, channel: this.channelName});
+    this.pubnub.publish({ message: this.newMessage, channel: this.channelName }, () => {
       this.newMessage = '';
-    }
+    });
   }
 }
