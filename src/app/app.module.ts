@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule
   ],
-  providers: [PubNubAngular],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [ PubNubAngular ]
 })
 export class AppModule { }

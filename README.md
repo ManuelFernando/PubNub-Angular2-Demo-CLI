@@ -1,6 +1,6 @@
 # PubNubAngular2DemoCLI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 4, PubNub 4.17 and PubNub-Angular2 1.2.0
 
 ## Development server
 
