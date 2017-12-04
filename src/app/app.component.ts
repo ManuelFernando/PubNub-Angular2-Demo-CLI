@@ -19,7 +19,8 @@ export class AppComponent {
     pubnub.init({
       publishKey: 'demo',
       subscribeKey: 'demo',
-      uuid: this.userId
+      uuid: this.userId,
+      triggerEvent: true
     });
 
     pubnub.subscribe({ channels: [this.channelName], triggerEvents: true });
